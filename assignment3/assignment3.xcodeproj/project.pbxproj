@@ -11,6 +11,14 @@
 		BB599CFC2BD622C200E850C0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB599CFB2BD622C200E850C0 /* ContentView.swift */; };
 		BB599CFE2BD622C600E850C0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB599CFD2BD622C600E850C0 /* Assets.xcassets */; };
 		BB599D012BD622C600E850C0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB599D002BD622C600E850C0 /* Preview Assets.xcassets */; };
+		BB871F272BDF551C0042FCDB /* MealLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB871F262BDF551C0042FCDB /* MealLogView.swift */; };
+		BB871F292BDF554C0042FCDB /* MedicationLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB871F282BDF554B0042FCDB /* MedicationLogView.swift */; };
+		BB871F2B2BDF557E0042FCDB /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB871F2A2BDF557E0042FCDB /* UserViewModel.swift */; };
+		BB871F2D2BDF55A40042FCDB /* MealViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB871F2C2BDF55A40042FCDB /* MealViewModel.swift */; };
+		BB871F2F2BDF55B00042FCDB /* MedicationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB871F2E2BDF55B00042FCDB /* MedicationViewModel.swift */; };
+		BB871F312BDF55DB0042FCDB /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB871F302BDF55DB0042FCDB /* UserModel.swift */; };
+		BB871F332BDF55E60042FCDB /* MealModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB871F322BDF55E60042FCDB /* MealModel.swift */; };
+		BB871F352BDF55F40042FCDB /* MedicationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB871F342BDF55F40042FCDB /* MedicationModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +27,14 @@
 		BB599CFB2BD622C200E850C0 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		BB599CFD2BD622C600E850C0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BB599D002BD622C600E850C0 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		BB871F262BDF551C0042FCDB /* MealLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MealLogView.swift; path = assignment3/MealLogView.swift; sourceTree = SOURCE_ROOT; };
+		BB871F282BDF554B0042FCDB /* MedicationLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicationLogView.swift; sourceTree = "<group>"; };
+		BB871F2A2BDF557E0042FCDB /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
+		BB871F2C2BDF55A40042FCDB /* MealViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealViewModel.swift; sourceTree = "<group>"; };
+		BB871F2E2BDF55B00042FCDB /* MedicationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicationViewModel.swift; sourceTree = "<group>"; };
+		BB871F302BDF55DB0042FCDB /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		BB871F322BDF55E60042FCDB /* MealModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealModel.swift; sourceTree = "<group>"; };
+		BB871F342BDF55F40042FCDB /* MedicationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicationModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,7 +68,9 @@
 			isa = PBXGroup;
 			children = (
 				BB599CF92BD622C200E850C0 /* assignment3App.swift */,
-				BB599CFB2BD622C200E850C0 /* ContentView.swift */,
+				BB871F232BDF54A90042FCDB /* View */,
+				BB871F242BDF54B70042FCDB /* ViewModel */,
+				BB871F252BDF54BF0042FCDB /* Model */,
 				BB599CFD2BD622C600E850C0 /* Assets.xcassets */,
 				BB599CFF2BD622C600E850C0 /* Preview Content */,
 			);
@@ -65,6 +83,36 @@
 				BB599D002BD622C600E850C0 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		BB871F232BDF54A90042FCDB /* View */ = {
+			isa = PBXGroup;
+			children = (
+				BB599CFB2BD622C200E850C0 /* ContentView.swift */,
+				BB871F262BDF551C0042FCDB /* MealLogView.swift */,
+				BB871F282BDF554B0042FCDB /* MedicationLogView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		BB871F242BDF54B70042FCDB /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				BB871F2A2BDF557E0042FCDB /* UserViewModel.swift */,
+				BB871F2C2BDF55A40042FCDB /* MealViewModel.swift */,
+				BB871F2E2BDF55B00042FCDB /* MedicationViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		BB871F252BDF54BF0042FCDB /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				BB871F302BDF55DB0042FCDB /* UserModel.swift */,
+				BB871F322BDF55E60042FCDB /* MealModel.swift */,
+				BB871F342BDF55F40042FCDB /* MedicationModel.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,8 +185,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB871F292BDF554C0042FCDB /* MedicationLogView.swift in Sources */,
 				BB599CFC2BD622C200E850C0 /* ContentView.swift in Sources */,
+				BB871F312BDF55DB0042FCDB /* UserModel.swift in Sources */,
 				BB599CFA2BD622C200E850C0 /* assignment3App.swift in Sources */,
+				BB871F352BDF55F40042FCDB /* MedicationModel.swift in Sources */,
+				BB871F2F2BDF55B00042FCDB /* MedicationViewModel.swift in Sources */,
+				BB871F2B2BDF557E0042FCDB /* UserViewModel.swift in Sources */,
+				BB871F272BDF551C0042FCDB /* MealLogView.swift in Sources */,
+				BB871F332BDF55E60042FCDB /* MealModel.swift in Sources */,
+				BB871F2D2BDF55A40042FCDB /* MealViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
