@@ -8,17 +8,17 @@
 import SwiftUI
 
 struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+     var body: some View {
+        NavigationView {
+            ProfileView()
+                .navigationBarTitle("Profile")
         }
-        .padding()
     }
 }
-
-#Preview {
-    ContentView()
-}
+struct ProfileView: View {
+    @State private var name: String = ""
+    @State private var age: Int = 0
+    @State private var gender: Gender = .male
+    @State private var weight: Int = 0
+    @State private var height: Int = 0
+    
