@@ -6,3 +6,14 @@
 //
 
 import Foundation
+struct Meal: Identifiable, Codable {
+    var id: UUID = UUID()
+    var mealType: MealType
+    var menuName: String
+    var calories: Int
+    var date: Date
+    
+    enum MealType: String, Codable, CaseIterable {
+        case breakfast, lunch, dinner, snack
+    }
+}
