@@ -8,42 +8,37 @@
 import SwiftUI
 
 struct ContentView: View {
-     
-    @State private var name: String = ""
-    @State private var age: Int = 0
-    @State private var gender: Gender = .male
-    @State private var weight: Int = 0
-    @State private var height: Int = 0
-     var body: some View {
-          NavigationView {
-               Form {
-                    Section(header: Text("Personal Information").foregroundColor(.blue))
-                    TextField("Name", text: $name)
-                    Stepper("Age: \(age)", value: $age, in: 0...120)
-                    Picker("Gender", selection: $gender) {
-                         ForEach(Gender.allCases, id: \self) {gender in
-                              Text(gender.rawValue.capitalized)
-                         }
-                    }
-                    .pickerStyle(SegmentedPickerStyle())
-               }
-               Section(header: Text("Body Metrics").foregroundColor(.green)) {
-                    Stepper("Weight (kg): \(weight)", value: $weight, in: 0...400)
-                    Stepper("Height (cm): \(height)", value: $height, in: 0...300)
-               }
-               Button(action: saveProfile) {
-                    Text("Save Profile")
-               }
-          }
-          .navigationTitle("Profile")
-     }
-}
-func saveProfile() {
-     print("Name: \(name), Age: \(age), Gender: \(gender.rawValue), Weight: \(weight), Height: \(height)")
-}
-enum Gender: String, CaseIterable {
-     case male
-     case female
-     case other
-}
+    var body: some View {
+        NavigationView {
+            VStack {
+                Spacer()
+                Label("Diet App", systemImage: "")
+                    .foregroundColor(.mint)
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                Spacer()
+                Text("🍽️")
+                    .font(.system(size: 100))
+                Spacer()
+                
+                //NavigationLinks
+                NavigationLink(destination: UserView(), label: {Text("User Information")
+                        .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+                })
+                NavigationLink(destination: MealLogView(), label: {Text("Meal Log")
+                        .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+                })
+                .padding(50)
+                NavigationLink(destination: MedicationLogView(), label: {Text("Medication Log")
+                        .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+                })
+                Spacer()
+            }
+        }
+    }
     
+}
+#Preview {
+    ContentView()
+}
+

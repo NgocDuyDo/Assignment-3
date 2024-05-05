@@ -19,6 +19,7 @@
 		BB871F312BDF55DB0042FCDB /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB871F302BDF55DB0042FCDB /* UserModel.swift */; };
 		BB871F332BDF55E60042FCDB /* MealModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB871F322BDF55E60042FCDB /* MealModel.swift */; };
 		BB871F352BDF55F40042FCDB /* MedicationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB871F342BDF55F40042FCDB /* MedicationModel.swift */; };
+		BB871F372BE7A7190042FCDB /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB871F362BE7A7190042FCDB /* UserView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,7 @@
 		BB871F302BDF55DB0042FCDB /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		BB871F322BDF55E60042FCDB /* MealModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealModel.swift; sourceTree = "<group>"; };
 		BB871F342BDF55F40042FCDB /* MedicationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicationModel.swift; sourceTree = "<group>"; };
+		BB871F362BE7A7190042FCDB /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +91,7 @@
 			isa = PBXGroup;
 			children = (
 				BB599CFB2BD622C200E850C0 /* ContentView.swift */,
+				BB871F362BE7A7190042FCDB /* UserView.swift */,
 				BB871F262BDF551C0042FCDB /* MealLogView.swift */,
 				BB871F282BDF554B0042FCDB /* MedicationLogView.swift */,
 			);
@@ -185,6 +188,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB871F372BE7A7190042FCDB /* UserView.swift in Sources */,
 				BB871F292BDF554C0042FCDB /* MedicationLogView.swift in Sources */,
 				BB599CFC2BD622C200E850C0 /* ContentView.swift in Sources */,
 				BB871F312BDF55DB0042FCDB /* UserModel.swift in Sources */,
