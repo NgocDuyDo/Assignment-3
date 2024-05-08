@@ -68,6 +68,16 @@ struct MealEntryView: View {
                 }
                 TextField("Menu Name", text: $meal.menuName)
                 TextField("Calories", value: $meal.calories, formatter: NumberFormatter())
+                Section(header: Text("Medication Details")) {
+                    TextField("Medication name", text: $medicationName)
+                    TextField("Dosage", text: $medicationDosage)
+                    DatePicker("Reminder Time", selection: $selectedMedicationTime, displayedComponents: .hourAndMinute)
+                    Picker("Reminder Timing", selection: $selectedReminderTiming) {
+                        ForEach(0..<reminderTimings.count) {index in
+                            Text(reminderTimings[index])
+                        }
+                    }
+                }
                 Button("Save") {
                     if let index = viewModel.meals.firstIndex(where: { $0.id == meal.id }) {
                         viewModel.meals[index] = meal // Update existing meal
