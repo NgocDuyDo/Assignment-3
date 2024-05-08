@@ -52,7 +52,11 @@ struct MealEntryView: View {
     @ObservedObject var viewModel: MealLogViewModel
     @State var meal: Meal
     @Environment(\.presentationMode) var presentationMode
-    
+    @State private var medicationName = ""
+    @State private var medicationDosage = ""
+    @State private var selectedMedicationTime = Date()
+    @State private var selectedReminderTiming = 0
+    let reminderTimings = ["Before Meal", "During Meal", "After Meal"]
     var body: some View {
         NavigationView {
             Form {
