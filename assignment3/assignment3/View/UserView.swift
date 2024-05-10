@@ -12,7 +12,7 @@ import SwiftUI
 struct UserView: View {
     @StateObject var userViewModel = UserViewModel()
     @State private var showDatePicker = false  // State to control visibility of the DatePicker
-
+    @State private var isProfileSaved = false
     var body: some View {
         NavigationView {
             Form {
@@ -62,11 +62,16 @@ struct UserView: View {
                     }
                     .padding(.horizontal)
                 }
-
-                Button(action: userViewModel.saveUser) {
+                NavigationLink(
+                    destination: MealLogView(), label: {
+                Button(action: {
+                       userViewModel.saveUser() 
+                    Print("Profile is save")
+                    isProfileSaved = true
+                }) {
                     Text("Save Profile")
                 }
-            }
+            })
             .navigationTitle("Profile")
         }
     }
