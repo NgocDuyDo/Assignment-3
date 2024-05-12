@@ -9,13 +9,10 @@ import SwiftUI
 
 struct MealEntryView: View {
     @ObservedObject var viewModel: MealLogViewModel
+    @ObservedObject var userViewModel: UserViewModel
     @State var meal: Meal
     @Environment(\.presentationMode) var presentationMode
-    @State private var medicationName = ""
-    @State private var medicationDosage = ""
-    @State private var selectedMedicationTime = Date()
-    @State private var selectedReminderTimingIndex = 0
-    let reminderTimings = ["Before Meal", "During Meal", "After Meal"]
+
     
     var body: some View {
         NavigationView {
@@ -24,7 +21,7 @@ struct MealEntryView: View {
                 
                 mealDetailsSection
                 
-                medicationDetailsSection
+                medicationListSection
                 
                 Button("Save") {
                     saveMeal()
@@ -54,42 +51,78 @@ struct MealEntryView: View {
             }
         }
     }
-
-    private var medicationDetailsSection: some View {
-        Section(header: Text("Medication Details")) {
-            TextField("Medication Name", text: $medicationName)
-            TextField("Dosage", text: $medicationDosage)
-            DatePicker("Medication Time", selection: $selectedMedicationTime, displayedComponents: .hourAndMinute)
-            Picker("Reminder Timing", selection: $selectedReminderTimingIndex) {
-                ForEach(0..<reminderTimings.count) { index in
-                    Text(reminderTimings[index])
+    private var medicationListSection: some View {
+        Section(header: Text("Select Medications")) {
+            ForEach(userViewModel.medications.indices, id: \.self) { index in
+                HStack {
+                    Button(action: {
+                        toggleMedicationSelected(userViewModel.medications[index].id)
+                    }) {
+                        HStack {
+                            Image(systemName: meal.selectedMedications.contains(userViewModel.medications[index].id) ? "checkmark.square.fill" : "square")
+                            Text(userViewModel.medications[index].medicationName)
+                        }
+                    }
                 }
             }
         }
     }
-
+    
+    /*private var medicationListSection: some View {
+        Section(header: Text("Select Medications")) {
+            ForEach($viewModel.medications.indices, id: \.self) { index in
+                HStack {
+                    Button(action: {
+                        // Toggle selection
+                        let id = $viewModel.medications[index].id
+                        if meal.selectedMedications.contains(id) {
+                            meal.selectedMedications.removeAll { $0 == id }
+                        } else {
+                            meal.selectedMedications.append(id)
+                        }
+                    }) {
+                        HStack {
+                            Image(systemName: meal.selectedMedications.contains($viewModel.medications[index].id) ? "checkmark.square" : "square")
+                            Text(viewModel.medications[index].medicationName)
+                        }
+                    }
+                }
+            }
+        }
+    }*/
+    private func toggleMedicationSelected(_ id: UUID) {
+        if let index = meal.selectedMedications.firstIndex(of: id) {
+            meal.selectedMedications.remove(at: index)
+        } else {
+            meal.selectedMedications.append(id)
+        }
+    }
     private func saveMeal() {
-        let reminderTiming = reminderTimings[selectedReminderTimingIndex]
-        let medication = Medication(name: medicationName, dosage: medicationDosage, time: selectedMedicationTime, reminderTiming: .afterMeal)
-        meal.medication = medication
         if let index = viewModel.meals.firstIndex(where: { $0.id == meal.id }) {
             viewModel.meals[index] = meal // Update existing meal
         } else {
             viewModel.addMeal(meal) // Add new meal
         }
-        presentationMode.wrappedValue.dismiss() // Dismiss the view after saving
-        /*let reminderTiming = ReminderTiming(rawValue: reminderTimings[selectedReminderTimingIndex]) ?? .afterMeal
-        let medication = Medication(name: medicationName, dosage: medicationDosage, time: selectedMedicationTime, reminderTiming: reminderTiming)
-        meal.medication = medication
-        viewModel.addMeal(meal, with: medication)
-        presentationMode.wrappedValue.dismiss()*/
+        presentationMode.wrappedValue.dismiss()
     }
 }
 
 struct MealEntryView_Previews: PreviewProvider {
     static var previews: some View {
-        let viewModel = MealLogViewModel()
-        let sampleDate = Date()
-        MealEntryView(viewModel: viewModel, meal: Meal(mealType: .breakfast, menuName: "", calories: 0, date: sampleDate))
+        let mealLogViewModel = MealLogViewModel()
+        let userViewModel = UserViewModel()
+        MealEntryView(
+              viewModel: mealLogViewModel,
+              userViewModel: userViewModel,
+              meal: Meal(
+                  mealType: .breakfast, // Default type
+                  menuName: "Sample Breakfast", // Example menu name
+                  calories: 350, // Example calorie count
+                  date: Date(), // Current date
+                  selectedMedications: [] // Empty medication list
+              )
+        )
+        //let sampleDate = Date()
+        //MealEntryView(viewModel: viewModel, meal: Meal(mealType: .breakfast, menuName: "", calories: 0, date: sampleDate))
     }
 }

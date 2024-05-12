@@ -9,6 +9,7 @@ import SwiftUI
  
  struct MealLogView: View {
      @StateObject var viewModel = MealLogViewModel()
+     @StateObject var userViewModel = UserViewModel()
      @State private var showingDetails = false
      @State private var currentMeal: Meal?
     
@@ -30,7 +31,7 @@ import SwiftUI
              .navigationTitle("Meal Log")
              .sheet(isPresented: $showingDetails) {
                  if let currentMeal = currentMeal {
-                     MealEntryView(viewModel: viewModel, meal: currentMeal)
+                     MealEntryView(viewModel: viewModel, userViewModel: userViewModel, meal: currentMeal)
                  }
              }
          }
@@ -38,12 +39,8 @@ import SwiftUI
 
      private var mealListSection: some View {
          List(viewModel.meals(for: viewModel.selectedDate)) { meal in
-             MealView(meal: meal)
+             MealView(viewModel: viewModel, meal: meal)  // Pass viewModel here
                  .padding()
-                 .onTapGesture {
-                     self.currentMeal = meal
-                     showingDetails = true
-                 }
                  .swipeActions(edge: .trailing, allowsFullSwipe: false) {
                      deleteButton(meal)
                      editButton(meal)
@@ -73,27 +70,29 @@ import SwiftUI
  }
 
  struct MealView: View {
+     @ObservedObject var viewModel: MealLogViewModel
      let meal: Meal
      
      var body: some View {
          VStack(alignment: .leading) {
-             Text(meal.menuName).font(.headline)
+             Text(meal.menuName)
+                 .font(.headline)
+                 .fontWeight(.bold)
              Text("Meal Type: \(meal.mealType.rawValue.capitalized)")
              Text("Calories: \(meal.calories)")
-             if let medication = meal.medication {
-                 medicationDetails(medication)
-             }
-         }
-     }
-
-     @ViewBuilder
-     private func medicationDetails(_ medication: Medication) -> some View {
-         VStack(alignment: .leading) {
-             Text("Medication Details:").foregroundColor(.brown)
-             Text("Medication Name: \(medication.name)")
-             Text("Dosage: \(medication.dosage)")
-             Text("Medication Time: \(medication.time, formatter: DateFormatter.shortTime)")
-             Text("Reminder Timing: \(medication.reminderTiming.rawValue)")
+             
+             if !meal.selectedMedications.isEmpty {
+                 VStack(alignment: .leading) {
+                     Text("Medications:").bold()
+                     ForEach(meal.selectedMedications, id: \.self) { id in
+                         if let medication = viewModel.findMedication(by: id) {
+                             Text(medication.medicationName) // Display medication name
+                         } else {
+                             Text("Unknown Medication") // Handle unknown medications
+                         }
+                     }
+                 }
+              }
          }
      }
  }
@@ -102,6 +101,10 @@ import SwiftUI
 extension MealLogViewModel {
     func hasMeals(for date: Date) -> Bool {
         !meals(for: date).isEmpty
+    }
+
+    func findMedication(by id: UUID) -> Medication? {
+        return medications.first { $0.id == id }
     }
 }
 extension DateFormatter {

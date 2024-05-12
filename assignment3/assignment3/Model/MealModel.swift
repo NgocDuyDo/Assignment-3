@@ -12,20 +12,13 @@ struct Meal: Identifiable, Codable {
     var menuName: String
     var calories: Int
     var date: Date
-    var medication: Medication?
-    var hasMedication: Bool {
-        return medication != nil
-    }
+    var selectedMedications: [UUID] = []
+    //var medication: Medication?
+    //var hasMedication: Bool {
+       // return medication != nil
+    //}
     enum MealType: String, Codable, CaseIterable {
         case breakfast, lunch, dinner, snack
     }
 }
-struct Medication: Codable {
-    var name: String
-    var dosage: String
-    var time: Date
-    var reminderTiming: ReminderTiming
-    enum ReminderTiming: String, Codable, CaseIterable {
-        case beforeMeal, duringMeal, afterMeal
-    }
-}
+

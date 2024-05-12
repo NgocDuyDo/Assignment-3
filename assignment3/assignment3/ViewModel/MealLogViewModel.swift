@@ -9,6 +9,7 @@ import Foundation
 
 class MealLogViewModel: ObservableObject {
     @Published var meals: [Meal] = []
+    @Published var medications: [Medication] = []
     @Published var selectedDate = Date()
     //@Published var mealToEdit: Meal?  // Holds the meal being edited
 
