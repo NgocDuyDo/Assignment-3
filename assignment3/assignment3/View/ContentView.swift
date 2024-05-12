@@ -9,35 +9,39 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        NavigationView {
-            VStack {
-                Spacer()
-                Label("Diet App", systemImage: "")
-                    .foregroundColor(.mint)
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                Spacer()
-                Text("🍽️")
-                    .font(.system(size: 100))
-                Spacer()
-                
-                //NavigationLinks
-                NavigationLink(destination: UserView(), label: {Text("User Information")
-                        .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
-                })
-                NavigationLink(destination: MealLogView(), label: {Text("Meal Log")
-                        .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
-                })
-                .padding(50)
-                NavigationLink(destination: MedicationLogView(), label: {Text("Medication Log")
-                        .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
-                })
-                Spacer()
-            }
+        TabView {
+            HomeView()
+                .tabItem {
+                    Label("Home", systemImage: "house")
+                }
+            MealLogView()
+                .tabItem {
+                    Label("Log", systemImage: "book")
+                }
+            UserView()
+                .tabItem {
+                    Label("User Info", systemImage: "person")
+                }
         }
     }
-    
 }
+
+struct HomeView: View {
+    var body: some View {
+        VStack {
+            Spacer()
+            Label("Diet App", systemImage: "leaf")
+                .foregroundColor(.mint)
+                .font(.largeTitle)
+                .fontWeight(.bold)
+            Spacer()
+            Text("🍽️")
+                .font(.system(size: 100))
+            Spacer()
+        }
+    }
+}
+
 #Preview {
     ContentView()
 }
