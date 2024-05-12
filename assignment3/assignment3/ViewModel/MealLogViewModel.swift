@@ -1,5 +1,5 @@
 //
-//  MealViewModel.swift
+//  MealLogViewModel.swift
 //  assignment3
 //
 //  Created by Chohwi Park on 29/4/2024.
@@ -30,13 +30,13 @@ class MealLogViewModel: ObservableObject {
         saveMeals()
     }
 
-    func saveMeals() {
+    private func saveMeals() {
         if let encoded = try? JSONEncoder().encode(meals) {
             UserDefaults.standard.set(encoded, forKey: "mealsData")
         }
     }
 
-    func loadMeals() {
+    private func loadMeals() {
         if let mealsData = UserDefaults.standard.data(forKey: "mealsData"),
            let decodedMeals = try? JSONDecoder().decode([Meal].self, from: mealsData) {
             meals = decodedMeals

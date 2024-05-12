@@ -14,12 +14,13 @@
 		BB871F272BDF551C0042FCDB /* MealLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB871F262BDF551C0042FCDB /* MealLogView.swift */; };
 		BB871F292BDF554C0042FCDB /* MedicationLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB871F282BDF554B0042FCDB /* MedicationLogView.swift */; };
 		BB871F2B2BDF557E0042FCDB /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB871F2A2BDF557E0042FCDB /* UserViewModel.swift */; };
-		BB871F2D2BDF55A40042FCDB /* MealViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB871F2C2BDF55A40042FCDB /* MealViewModel.swift */; };
+		BB871F2D2BDF55A40042FCDB /* MealLogViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB871F2C2BDF55A40042FCDB /* MealLogViewModel.swift */; };
 		BB871F2F2BDF55B00042FCDB /* MedicationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB871F2E2BDF55B00042FCDB /* MedicationViewModel.swift */; };
 		BB871F312BDF55DB0042FCDB /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB871F302BDF55DB0042FCDB /* UserModel.swift */; };
 		BB871F332BDF55E60042FCDB /* MealModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB871F322BDF55E60042FCDB /* MealModel.swift */; };
 		BB871F352BDF55F40042FCDB /* MedicationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB871F342BDF55F40042FCDB /* MedicationModel.swift */; };
 		BB871F372BE7A7190042FCDB /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB871F362BE7A7190042FCDB /* UserView.swift */; };
+		BB871F392BF09D380042FCDB /* MealEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB871F382BF09D380042FCDB /* MealEntryView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,12 +32,13 @@
 		BB871F262BDF551C0042FCDB /* MealLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MealLogView.swift; path = assignment3/MealLogView.swift; sourceTree = SOURCE_ROOT; };
 		BB871F282BDF554B0042FCDB /* MedicationLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicationLogView.swift; sourceTree = "<group>"; };
 		BB871F2A2BDF557E0042FCDB /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
-		BB871F2C2BDF55A40042FCDB /* MealViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealViewModel.swift; sourceTree = "<group>"; };
+		BB871F2C2BDF55A40042FCDB /* MealLogViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealLogViewModel.swift; sourceTree = "<group>"; };
 		BB871F2E2BDF55B00042FCDB /* MedicationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicationViewModel.swift; sourceTree = "<group>"; };
 		BB871F302BDF55DB0042FCDB /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		BB871F322BDF55E60042FCDB /* MealModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealModel.swift; sourceTree = "<group>"; };
 		BB871F342BDF55F40042FCDB /* MedicationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicationModel.swift; sourceTree = "<group>"; };
 		BB871F362BE7A7190042FCDB /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
+		BB871F382BF09D380042FCDB /* MealEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealEntryView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +95,7 @@
 				BB599CFB2BD622C200E850C0 /* ContentView.swift */,
 				BB871F362BE7A7190042FCDB /* UserView.swift */,
 				BB871F262BDF551C0042FCDB /* MealLogView.swift */,
+				BB871F382BF09D380042FCDB /* MealEntryView.swift */,
 				BB871F282BDF554B0042FCDB /* MedicationLogView.swift */,
 			);
 			path = View;
@@ -102,7 +105,7 @@
 			isa = PBXGroup;
 			children = (
 				BB871F2A2BDF557E0042FCDB /* UserViewModel.swift */,
-				BB871F2C2BDF55A40042FCDB /* MealViewModel.swift */,
+				BB871F2C2BDF55A40042FCDB /* MealLogViewModel.swift */,
 				BB871F2E2BDF55B00042FCDB /* MedicationViewModel.swift */,
 			);
 			path = ViewModel;
@@ -194,11 +197,12 @@
 				BB871F312BDF55DB0042FCDB /* UserModel.swift in Sources */,
 				BB599CFA2BD622C200E850C0 /* assignment3App.swift in Sources */,
 				BB871F352BDF55F40042FCDB /* MedicationModel.swift in Sources */,
+				BB871F392BF09D380042FCDB /* MealEntryView.swift in Sources */,
 				BB871F2F2BDF55B00042FCDB /* MedicationViewModel.swift in Sources */,
 				BB871F2B2BDF557E0042FCDB /* UserViewModel.swift in Sources */,
 				BB871F272BDF551C0042FCDB /* MealLogView.swift in Sources */,
 				BB871F332BDF55E60042FCDB /* MealModel.swift in Sources */,
-				BB871F2D2BDF55A40042FCDB /* MealViewModel.swift in Sources */,
+				BB871F2D2BDF55A40042FCDB /* MealLogViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
