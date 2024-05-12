@@ -29,10 +29,10 @@ import SwiftUI
                  Spacer()
              }
              .navigationTitle("Meal Log")
-             .sheet(isPresented: $showingDetails) {
-                 if let currentMeal = currentMeal {
-                     MealEntryView(viewModel: viewModel, userViewModel: userViewModel, meal: currentMeal)
-                 }
+             .sheet(item: $currentMeal, onDismiss: {
+                 // Perform any clean-up or reset actions if necessary
+             }) { meal in
+                 MealEntryView(viewModel: viewModel, userViewModel: userViewModel, meal: meal)
              }
          }
      }
