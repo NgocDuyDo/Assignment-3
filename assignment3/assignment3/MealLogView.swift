@@ -9,54 +9,94 @@ import SwiftUI
  
  struct MealLogView: View {
      @StateObject var viewModel = MealLogViewModel()
-     @State private var showingMealDetails = false
-     @State private var addingNewMeal = false
+     @State private var showingDetails = false
+     @State private var currentMeal: Meal?
     
-    var body: some View {
-        NavigationView {
-            VStack {
-                DatePicker("Select Date", selection: $viewModel.selectedDate, displayedComponents: .date)
-                    .datePickerStyle(GraphicalDatePickerStyle())
-                    .padding()
-                
-                List(viewModel.meals(for: viewModel.selectedDate)) { meal in
-                    VStack(alignment: .leading) {
-                        Text(meal.menuName)
-                            .font(.headline)
-                        Text("Meal Type: \(meal.mealType.rawValue.capitalized)")
-                        Text("Calories: \(meal.calories)")
-                        if meal.hasMedication {
-                            Text("Medication Details:").foregroundStyle(.brown)
-                            Text("Medication Name: \(meal.medication!.name)")
-                            Text("Dosage: \(meal.medication!.dosage)")
-                            if meal.hasMedication, let medicationTime = meal.medication?.time{
-                                Text("Medication Time: \(medicationTime, formatter:DateFormatter.shortTime)")
-                            }
-                            Text("ReminderTiming: \(meal.medication!.reminderTiming.rawValue)")
-                        }
-                    }
-                    .padding()
-                    .onTapGesture {
-                        // Set this meal for editing
-                        viewModel.mealToEdit = meal
-                        showingMealDetails = true
-                    }
-                }
-                
-                Button("Add Meal Log") {
-                    addingNewMeal = true
-                }
-                Spacer()
-            }
-            .navigationTitle("Meal Log")
-            .sheet(isPresented: $addingNewMeal) {
-                // Present a view to add a new meal
-                MealEntryView(viewModel: viewModel, meal: Meal(mealType: .breakfast, menuName: "", calories: 0, date: viewModel.selectedDate))
-            }
-        }
-    }
-}
+     var body: some View {
+         NavigationView {
+             VStack {
+                 DatePicker("Select Date", selection: $viewModel.selectedDate, displayedComponents: .date)
+                     .datePickerStyle(GraphicalDatePickerStyle())
+                     .padding()
+                 
+                 mealListSection
+                 
+                 Button("Add Meal Log") {
+                     currentMeal = Meal(mealType: .breakfast, menuName: "", calories: 0, date: viewModel.selectedDate)
+                     showingDetails = true
+                 }
+                 Spacer()
+             }
+             .navigationTitle("Meal Log")
+             .sheet(isPresented: $showingDetails) {
+                 if let currentMeal = currentMeal {
+                     MealEntryView(viewModel: viewModel, meal: currentMeal)
+                 }
+             }
+         }
+     }
 
+     private var mealListSection: some View {
+         List(viewModel.meals(for: viewModel.selectedDate)) { meal in
+             MealView(meal: meal)
+                 .padding()
+                 .onTapGesture {
+                     self.currentMeal = meal
+                     showingDetails = true
+                 }
+                 .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                     deleteButton(meal)
+                     editButton(meal)
+                 }
+         }
+     }
+     
+     private func deleteButton(_ meal: Meal) -> some View {
+         Button(role: .destructive) {
+             withAnimation {
+                 viewModel.deleteMeal(meal)
+             }
+         } label: {
+             Label("Delete", systemImage: "trash")
+         }
+     }
+     
+     private func editButton(_ meal: Meal) -> some View {
+         Button {
+             currentMeal = meal
+             showingDetails = true
+         } label: {
+             Label("Edit", systemImage: "pencil")
+         }
+         .tint(.blue)
+     }
+ }
+
+ struct MealView: View {
+     let meal: Meal
+     
+     var body: some View {
+         VStack(alignment: .leading) {
+             Text(meal.menuName).font(.headline)
+             Text("Meal Type: \(meal.mealType.rawValue.capitalized)")
+             Text("Calories: \(meal.calories)")
+             if let medication = meal.medication {
+                 medicationDetails(medication)
+             }
+         }
+     }
+
+     @ViewBuilder
+     private func medicationDetails(_ medication: Medication) -> some View {
+         VStack(alignment: .leading) {
+             Text("Medication Details:").foregroundColor(.brown)
+             Text("Medication Name: \(medication.name)")
+             Text("Dosage: \(medication.dosage)")
+             Text("Medication Time: \(medication.time, formatter: DateFormatter.shortTime)")
+             Text("Reminder Timing: \(medication.reminderTiming.rawValue)")
+         }
+     }
+ }
 struct MealEntryView: View {
     @ObservedObject var viewModel: MealLogViewModel
     @State var meal: Meal
@@ -75,8 +115,17 @@ struct MealEntryView: View {
                         Text(type.rawValue.capitalized).tag(type)
                     }
                 }
-                TextField("Menu Name", text: $meal.menuName)
-                TextField("Calories", value: $meal.calories, formatter: NumberFormatter())
+                HStack {
+                    Text("Menu Name")
+                    Spacer()
+                    TextField("Enter menu name", text: $meal.menuName)
+                }
+                HStack {
+                    Text("Calories")
+                    Spacer()
+                    TextField("Enter calories", value: $meal.calories, formatter: NumberFormatter())
+                        .keyboardType(.numberPad)
+                }
                 Section(header: Text("Medication Details")) {
                     TextField("Medication Name", text: $medicationName)
                     TextField("Dosage", text: $medicationDosage)
@@ -95,7 +144,7 @@ struct MealEntryView: View {
                     if let index = viewModel.meals.firstIndex(where: { $0.id == meal.id }) {
                         viewModel.meals[index] = meal // Update existing meal
                     } else {
-                        viewModel.addMeal(meal: meal) // Add new meal
+                        viewModel.addMeal(meal) // Add new meal
                     }
                     presentationMode.wrappedValue.dismiss() // Dismiss the view after saving
                 }

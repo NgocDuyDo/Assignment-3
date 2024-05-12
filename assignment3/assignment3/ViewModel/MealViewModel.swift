@@ -10,18 +10,23 @@ import Foundation
 class MealLogViewModel: ObservableObject {
     @Published var meals: [Meal] = []
     @Published var selectedDate = Date()
-    @Published var mealToEdit: Meal?  // Holds the meal being edited
+    //@Published var mealToEdit: Meal?  // Holds the meal being edited
 
     init() {
-        loadMeals()  // Load meals from UserDefaults or other storage upon initialization
+        loadMeals()
     }
 
-    func addMeal(meal: Meal) {
+    func addMeal(_ meal: Meal) {
         if let index = meals.firstIndex(where: { $0.id == meal.id }) {
-            meals[index] = meal  // Update existing meal
+            meals[index] = meal
         } else {
-            meals.append(meal)  // Add new meal
+            meals.append(meal)
         }
+        saveMeals()
+    }
+
+    func deleteMeal(_ meal: Meal) {
+        meals.removeAll { $0.id == meal.id }
         saveMeals()
     }
 
@@ -39,11 +44,7 @@ class MealLogViewModel: ObservableObject {
     }
 
     func meals(for date: Date) -> [Meal] {
-        return meals.filter { Calendar.current.isDate($0.date, inSameDayAs: date) }
+        meals.filter { Calendar.current.isDate($0.date, inSameDayAs: date) }
     }
-
-    /*func hasMeals(for date: Date) -> Bool {
-        !meals(for: date).isEmpty
-    }*/
 }
 
