@@ -63,15 +63,22 @@ struct UserView: View {
                     .padding(.horizontal)
                 }
                 NavigationLink(
-                    destination: MealLogView(), label: {
-                Button(action: {
-                       userViewModel.saveUser() 
-                    Print("Profile is save")
-                    isProfileSaved = true
-                }) {
-                    Text("Save Profile")
-                }
-            })
+                    destination: MealLogView(),
+                    label: {
+                        Button(action: {
+                            print("Name: \(userViewModel.user.name)")
+                            print("DOB: \(userViewModel.user.dateOfBirth)")
+                            print("Gender: \(userViewModel.user.gender)")
+                            print("Weight: \(userViewModel.user.weight)")
+                            print("Height: \(userViewModel.user.height)")
+                            userViewModel.saveUser()
+                            print("Profile is save")
+                            isProfileSaved = true
+                        }) {
+                            Text("Save Profile")
+                        }
+                    })
+            }
             .navigationTitle("Profile")
         }
     }
