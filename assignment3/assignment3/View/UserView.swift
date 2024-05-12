@@ -62,6 +62,10 @@ struct UserView: View {
                     }
                     .padding(.horizontal)
                 }
+                Section(header: Text("Medication")) {
+                    TextField("Medication Name", text: $userViewModel.medicationName)
+                    TextField("Medication Instruction", text: $userViewModel.medicationInstruction)
+                }
                 NavigationLink(
                     destination: MealLogView(),
                     label: {
