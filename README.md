@@ -7,6 +7,7 @@ https://github.com/NgocDuyDo/Assignment-3.git
 Team Members:
 14371809 Chloe Park
 24955890 Aston Walsh
+14208021 Ngoc Duy Do
 
 
 Description:
