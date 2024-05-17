@@ -11,12 +11,18 @@ class MealLogViewModel: ObservableObject {
     @Published var meals: [Meal] = []
     @Published var medications: [Medication] = []
     @Published var selectedDate = Date()
+    var userViewModel: UserViewModel
     //@Published var mealToEdit: Meal?  // Holds the meal being edited
 
-    init() {
+    init(userViewModel: UserViewModel) {
+        self.userViewModel = userViewModel
         loadMeals()
     }
 
+    func findMedication(by id: UUID) -> Medication? {
+        return userViewModel.medications.first { $0.id == id }
+    }
+    
     func addMeal(_ meal: Meal) {
         if let index = meals.firstIndex(where: { $0.id == meal.id }) {
             meals[index] = meal

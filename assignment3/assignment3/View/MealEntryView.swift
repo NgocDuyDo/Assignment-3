@@ -78,7 +78,6 @@ struct MealEntryView: View {
         }
     }
     private func saveMeal() {
-       
         if let index = viewModel.meals.firstIndex(where: { $0.id == meal.id }) {
             viewModel.meals[index] = meal // Update existing meal
         } else {
@@ -90,7 +89,7 @@ struct MealEntryView: View {
 
 struct MealEntryView_Previews: PreviewProvider {
     static var previews: some View {
-        let mealLogViewModel = MealLogViewModel()
+        let mealLogViewModel = MealLogViewModel(userViewModel: UserViewModel())
         let userViewModel = UserViewModel()
         MealEntryView(
               viewModel: mealLogViewModel,

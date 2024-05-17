@@ -30,8 +30,8 @@ struct ContentView: View {
 
 
 struct LineChartView: View {
-    @StateObject var viewModel = MealLogViewModel()
-    
+    @StateObject var viewModel = MealLogViewModel(userViewModel: UserViewModel())
+
     var sortedMeals: [Meal] {
         return viewModel.meals.sorted(by: { $0.date < $1.date })
     }

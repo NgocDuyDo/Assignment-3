@@ -8,10 +8,17 @@
 import SwiftUI
  
  struct MealLogView: View {
-     @StateObject var viewModel = MealLogViewModel()
+     @StateObject var viewModel = MealLogViewModel(userViewModel: UserViewModel())
      @StateObject var userViewModel = UserViewModel()
      @State private var showingDetails = false
      @State private var currentMeal: Meal?
+     
+     init() {
+         let userViewModel = UserViewModel()
+         _viewModel = StateObject(wrappedValue: MealLogViewModel(userViewModel: userViewModel))
+         _userViewModel = StateObject(wrappedValue: userViewModel)
+     }
+     
      var body: some View {
          NavigationView {
              VStack {
@@ -153,9 +160,6 @@ extension MealLogViewModel {
         !meals(for: date).isEmpty
     }
 
-    func findMedication(by id: UUID) -> Medication? {
-        return medications.first { $0.id == id }
-    }
 }
 
 extension DateFormatter {
