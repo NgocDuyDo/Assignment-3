@@ -23,7 +23,7 @@ import SwiftUI
          VStack {
              Text("Meal Log")
                  .foregroundColor(.mint)
-                 .font(.largeTitle)
+                 .font(.system(size: 30))
                  .fontWeight(.bold)
                  .padding()
 
@@ -31,9 +31,8 @@ import SwiftUI
                  .datePickerStyle(GraphicalDatePickerStyle())
                  .tint(.mint)
                  .labelsHidden()
-                 .frame(width: 350, height: 310, alignment: .center)
-                 .clipped()
-                 .padding()
+                 .frame(width: 350, height: 280, alignment: .center)
+                 .padding(20)
 
              Text("Recorded Meals").font(.system(size: 20).weight(.medium))
                  .foregroundColor(Color.white)
@@ -119,24 +118,29 @@ import SwiftUI
      var body: some View {
          VStack(alignment: .leading) {
              Text(meal.menuName)
-                 .font(.headline)
+                 .font(.system(size: 18))
                  .fontWeight(.bold)
              Text("Meal Type: \(meal.mealType.rawValue.capitalized)")
+                 .font(.system(size: 14))
              Text("Calories: \(meal.calories)")
+                 .font(.system(size: 14))
              
              if !meal.selectedMedications.isEmpty {
                  VStack(alignment: .leading) {
                      Text("Medications:").bold()
+                         .font(.system(size: 18))
                      ForEach(meal.selectedMedications, id: \.self) { id in
                          if let medication = viewModel.findMedication(by: id) {
-                             Text(medication.medicationName) // Display medication name
+                             Text(medication.medicationName)
+                                 .font(.system(size: 14))
+                             // Display medication name
                          } else {
                              Text("Unknown Medication") // Handle unknown medications
                          }
                      }
                  }
               }
-         }
+         }.padding(-10)
      }
  }
 
