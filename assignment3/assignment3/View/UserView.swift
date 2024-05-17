@@ -7,30 +7,38 @@
 
 import SwiftUI
 
-import SwiftUI
-
+// Displays user profile details and allows updating personal information
 struct UserView: View {
     @StateObject var userViewModel = UserViewModel()
     @State private var showDatePicker = false
     @State private var isProfileSaved = false
+    
     var body: some View {
         VStack {
+            //header
             Label("Profile", systemImage: "")
                 .foregroundColor(.mint)
                 .font(.system(size: 30))
                 .fontWeight(.bold)
                 .padding()
+            
+            //form for entering user details and medications
             Form {
                 personalInformationSection
                 bodyMetricsSection
+                
+                //display medicationSection only if there are medications
                 if !userViewModel.medications.isEmpty {
                     medicationsSection
                 }
+                
                 addMedicationSection
                 saveProfileButton
             }
         }
     }
+    
+    //section for personal information (name and dob)
     private var personalInformationSection: some View {
         Group {
             Section(header: Text("Personal Information").foregroundColor(.mint)) {
@@ -58,6 +66,7 @@ struct UserView: View {
         }
     }
     
+    //section for body metrics information (weight, height)
     private var bodyMetricsSection: some View {
         Section(header: Text("Body Metrics").foregroundColor(.mint)) {
             HStack {
@@ -68,7 +77,6 @@ struct UserView: View {
                     .multilineTextAlignment(.trailing)
                     .frame(width: 80)
             }
-
             HStack {
                 Text("Height (cm):")
                 Spacer()
@@ -80,6 +88,7 @@ struct UserView: View {
         }
     }
     
+    //section to display medications
     private var medicationsSection: some View {
         Group{
             Section(header: Text("Medication").foregroundColor(.mint)) {
@@ -96,6 +105,8 @@ struct UserView: View {
             }
         }
     }
+    
+    //section to add new medication
     private var addMedicationSection: some View {
         Section(header: Text("Add Medication").foregroundColor(.mint)) {
             TextField("Medication Name", text: $userViewModel.newMedicationName)
@@ -122,6 +133,7 @@ struct UserView: View {
         }
     }
 
+    //button to save profile
     private var saveProfileButton: some View {
         Button("Save Profile") {
             userViewModel.saveUser()
@@ -141,7 +153,7 @@ extension DateFormatter {
     }()
 }
 
-
+//preview
 #Preview {
     UserView()
 }

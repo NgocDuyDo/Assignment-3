@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// View for adding or editing a meal entry.
 struct MealEntryView: View {
     @ObservedObject var viewModel: MealLogViewModel
     @ObservedObject var userViewModel: UserViewModel
@@ -15,19 +16,23 @@ struct MealEntryView: View {
     
     var body: some View {
         VStack{
+            //header
             Text("Add/Edit Meal")
                 .foregroundColor(.mint)
                 .font(.largeTitle)
                 .fontWeight(.bold)
                 .padding()
+            
             Form {
                 DatePicker("Date:", selection: $meal.date, displayedComponents: .date)
-                
                 mealDetailsSection
                 
-                medicationListSection
+                //display medicationListSection only if there are medications
+                if !userViewModel.medications.isEmpty {
+                    medicationListSection
+                }
                 
-                Button("Save") {
+                Button("Save") { //save button
                     saveMeal()
                 }
                 .tint(.mint)
@@ -35,6 +40,7 @@ struct MealEntryView: View {
         }
     }
 
+    //Section for entering meal details (type, name, and calories)
     private var mealDetailsSection: some View {
         Group {
             Picker("Meal Type:", selection: $meal.mealType) {
@@ -55,6 +61,8 @@ struct MealEntryView: View {
             }
         }
     }
+    
+    // Section for selecting medications
     private var medicationListSection: some View {
         Section(header: Text("Select Medications")) {
             ForEach(userViewModel.medications.indices, id: \.self) { index in
@@ -74,6 +82,7 @@ struct MealEntryView: View {
         }
     }
 
+    // Toggle selection status of a medication
     private func toggleMedicationSelected(_ id: UUID) {
         if let index = meal.selectedMedications.firstIndex(of: id) {
             meal.selectedMedications.remove(at: index)
@@ -81,6 +90,8 @@ struct MealEntryView: View {
             meal.selectedMedications.append(id)
         }
     }
+    
+    // Save or update the meal
     private func saveMeal() {
         if let index = viewModel.meals.firstIndex(where: { $0.id == meal.id }) {
             viewModel.meals[index] = meal // Update existing meal
@@ -91,6 +102,7 @@ struct MealEntryView: View {
     }
 }
 
+//preview
 struct MealEntryView_Previews: PreviewProvider {
     static var previews: some View {
         let mealLogViewModel = MealLogViewModel(userViewModel: UserViewModel())
@@ -99,11 +111,11 @@ struct MealEntryView_Previews: PreviewProvider {
               viewModel: mealLogViewModel,
               userViewModel: userViewModel,
               meal: Meal(
-                  mealType: .breakfast, // Default type
-                  menuName: "Sample Breakfast", // Example menu name
-                  calories: 350, // Example calorie count
-                  date: Date(), // Current date
-                  selectedMedications: [] // Empty medication list
+                  mealType: .breakfast,
+                  menuName: "Sample Breakfast",
+                  calories: 350,
+                  date: Date(),
+                  selectedMedications: []
               )
         )
     }

@@ -28,7 +28,7 @@ struct ContentView: View {
     }
 }
 
-
+// Displays a line chart representing meal calories over time.
 struct LineChartView: View {
     var viewModel = MealLogViewModel(userViewModel: UserViewModel())
 
@@ -107,12 +107,13 @@ struct LineChartView: View {
     }
 }
 
-
+// Home view containing a greeting and a chart of calorie data./
 struct HomeView: View {
     let caloriesData = [300.0, 500.0, 600.0, 400.0, 700.0, 650.0, 200.0, 300.0, 550.0]
     let maxCalories = 900.0
     @ObservedObject var userViewModel = UserViewModel()
     @StateObject var mealLogViewModel = MealLogViewModel(userViewModel: UserViewModel())
+    
     var body: some View {
         VStack {
             Label("MealMed", systemImage: "cross.circle")
@@ -128,8 +129,6 @@ struct HomeView: View {
             
             Spacer(minLength: 0)
             LineChartView()
-                
-                
             
             VStack {
                 Text("Reminders").font(.system(size: 20).weight(.medium))
@@ -162,12 +161,15 @@ struct HomeView: View {
         }
         .onAppear(perform: refreshData)
     }
+    
+    // Refresh data on view appearance to ensure it's up-to-date
     private func refreshData() {
            userViewModel.objectWillChange.send()
            mealLogViewModel.objectWillChange.send()
        }
 }
 
+//preview
 #Preview {
     ContentView()
 }

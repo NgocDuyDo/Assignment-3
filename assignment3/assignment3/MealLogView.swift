@@ -7,7 +7,8 @@
 
 import SwiftUI
  
- struct MealLogView: View {
+// View that displays the list of meals, allowing users to add or edit meal logs.
+struct MealLogView: View {
      @StateObject var viewModel = MealLogViewModel(userViewModel: UserViewModel())
      @StateObject var userViewModel = UserViewModel()
      @State private var showingDetails = false
@@ -21,12 +22,14 @@ import SwiftUI
      
      var body: some View {
          VStack {
+             //header title
              Text("Meal Log")
                  .foregroundColor(.mint)
                  .font(.system(size: 30))
                  .fontWeight(.bold)
                  .padding()
 
+             // Date picker to select the date for the meal logs
              DatePicker("Select Date", selection: $viewModel.selectedDate, displayedComponents: .date)
                  .datePickerStyle(GraphicalDatePickerStyle())
                  .tint(.mint)
@@ -34,6 +37,7 @@ import SwiftUI
                  .frame(width: 350, height: 280, alignment: .center)
                  .padding(20)
 
+             // Section title for recorded meals
              Text("Recorded Meals").font(.system(size: 20).weight(.medium))
                  .foregroundColor(Color.white)
                  .background(
@@ -51,12 +55,10 @@ import SwiftUI
                  )
                  .padding(.top)
 
+             // List of meals
              mealListSection
-             /*ForEach(viewModel.medications) { medication in
-                 Text("\(medication.medicationName) : \(medication.medicationDosage), at \(medication.medicationTime, formatter: DateFormatter.shortTime), \(medication.medicationReminderTiming.rawValue)")
-             }
-             .padding(.bottom, 60)*/
 
+             //button to add a new meal
              Button("Add Meal Log") {
                  currentMeal = Meal(mealType: .breakfast, menuName: "", calories: 0, date: viewModel.selectedDate)
                  showingDetails = true
@@ -79,6 +81,7 @@ import SwiftUI
          }
      }
      
+    // Section containing the list of meals
      private var mealListSection: some View {
          List(viewModel.meals(for: viewModel.selectedDate)) { meal in
              MealView(viewModel: viewModel, meal: meal)  // Pass viewModel here
@@ -90,6 +93,7 @@ import SwiftUI
          }
      }
      
+    // Delete button for swipe action
      private func deleteButton(_ meal: Meal) -> some View {
          Button(role: .destructive) {
              withAnimation {
@@ -100,6 +104,7 @@ import SwiftUI
          }
      }
      
+    // Edit button for swipe action
      private func editButton(_ meal: Meal) -> some View {
          Button {
              currentMeal = meal
@@ -111,6 +116,7 @@ import SwiftUI
      }
  }
 
+// View to represent each meal in the list
  struct MealView: View {
      @ObservedObject var viewModel: MealLogViewModel
      let meal: Meal
@@ -144,7 +150,7 @@ import SwiftUI
      }
  }
 
-
+// Helper Extensions
 extension MealLogViewModel {
     func hasMeals(for date: Date) -> Bool {
         !meals(for: date).isEmpty
@@ -160,6 +166,7 @@ extension DateFormatter {
     } ()
 }
 
+//preview
 struct MealLogView_Previews: PreviewProvider {
     static var previews: some View {
         MealLogView()
