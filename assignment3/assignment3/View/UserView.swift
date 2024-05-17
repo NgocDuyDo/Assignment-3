@@ -22,11 +22,12 @@ struct UserView: View {
                 saveProfileButton
             }
             .navigationTitle("Profile")
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
     private var personalInformationSection: some View {
         Group {
-            Section(header: Text("Personal Information").foregroundColor(.blue)) {
+            Section(header: Text("Personal Information").foregroundColor(.mint)) {
                 TextField("Name", text: $userViewModel.user.name)
                 Button(action: {
                     // Toggle the visibility of the DatePicker
@@ -40,7 +41,7 @@ struct UserView: View {
                         .datePickerStyle(GraphicalDatePickerStyle())
                 }
             }
-            Section(header: Text("Gender").foregroundColor(.green)) {
+            Section(header: Text("Gender").foregroundColor(.mint)) {
                 Picker("Gender", selection: $userViewModel.user.gender) {
                     ForEach(User.Gender.allCases, id: \.self) { gender in
                         Text(gender.rawValue.capitalized).tag(gender)
@@ -52,7 +53,7 @@ struct UserView: View {
     }
     
     private var bodyMetricsSection: some View {
-        Section(header: Text("Body Metrics")) {
+        Section(header: Text("Body Metrics").foregroundColor(.mint)) {
             HStack {
                 Text("Weight (kg):")
                 Spacer()
@@ -75,7 +76,7 @@ struct UserView: View {
     
     private var medicationsSection: some View {
         Group{
-            Section(header: Text("Medication")) {
+            Section(header: Text("Medication").foregroundColor(.mint)) {
                 // List of medications
                 ForEach($userViewModel.medications) { $medication in
                     VStack(alignment: .leading) {
@@ -87,10 +88,10 @@ struct UserView: View {
                 }
                 .onDelete(perform: userViewModel.removeMedications)
             }
-            Section(header: Text("Add Medication")) {
+            Section(header: Text("Add Medication").foregroundColor(.mint)) {
                 TextField("Medication Name", text: $userViewModel.newMedicationName)
                 TextField("Dosage", text: $userViewModel.newMedicationDosage)
-                DatePicker("Time", selection: $userViewModel.newMedicationTime, displayedComponents: .hourAndMinute)
+                DatePicker("Time:", selection: $userViewModel.newMedicationTime, displayedComponents: .hourAndMinute)
                 Picker("Reminder Timing", selection: $userViewModel.newMedicationReminderTiming) {
                     ForEach(Medication.ReminderTiming.allCases, id: \.self) { timing in
                         Text(timing.rawValue).tag(timing)
@@ -108,6 +109,7 @@ struct UserView: View {
                     userViewModel.addMedication(medication: newMedication)
                     userViewModel.resetNewMedicationFields() // Clears the fields after adding
                 }
+                .foregroundColor(.mint)
             }
         }
     }
@@ -117,6 +119,7 @@ struct UserView: View {
             userViewModel.saveUser()
             isProfileSaved = true
         }
+        .tint(.mint)
     }
     
 }

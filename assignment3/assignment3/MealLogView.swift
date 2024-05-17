@@ -12,23 +12,73 @@ import SwiftUI
      @StateObject var userViewModel = UserViewModel()
      @State private var showingDetails = false
      @State private var currentMeal: Meal?
-    
      var body: some View {
          NavigationView {
              VStack {
                  DatePicker("Select Date", selection: $viewModel.selectedDate, displayedComponents: .date)
                      .datePickerStyle(GraphicalDatePickerStyle())
+                     .tint(.mint)
+                     .labelsHidden()
+                     .frame(width: 350, height: 310, alignment: .center)
+                     .clipped()
                      .padding()
+                 Spacer()
+                 
+                 
+                 
+                 Text("Recorded Meals").font(.system(size: 20).weight(.medium))
+                     .foregroundColor(Color.white)
+                     .background(
+                        Group {
+                            if !viewModel.meals(for: viewModel.selectedDate).isEmpty {
+                                    RoundedRectangle(cornerRadius: 10.0)
+                                    .frame(width: 1000, height: 45, alignment: .center)
+                                    .foregroundColor(Color.mint).brightness(0.1)
+                            }
+                            else {
+                                RoundedRectangle(cornerRadius: 10.0)
+                                .frame(width: 1000, height: 45, alignment: .center)
+                                .foregroundColor(Color.gray).brightness(0.1)
+                            }
+                            }
+                         )
+                     //.offset(y:-110)
+                 
                  
                  mealListSection
-                 
-                 Button("Add Meal Log") {
-                     currentMeal = Meal(mealType: .breakfast, menuName: "", calories: 0, date: viewModel.selectedDate)
-                     showingDetails = true
+                 ForEach(viewModel.medications) { medication in
+                     Text("\(medication.medicationName) : \(medication.medicationDosage), at \(medication.medicationTime, formatter: DateFormatter.shortTime), \(medication.medicationReminderTiming.rawValue)")
                  }
+                 .padding(.bottom, 60)
+                 Spacer()
+                 ZStack {
+                     Button("Add Meal Log") {
+                         currentMeal = Meal(mealType: .breakfast, menuName: "", calories: 0, date: viewModel.selectedDate)
+                         showingDetails = true
+                     }
+                     .font(.system(size: 18).weight(.medium))
+                     .foregroundColor(Color.white)
+                     .background(
+                        RoundedRectangle(cornerRadius: 10.0)
+                            .frame(width: 210, height: 40, alignment: .center)
+                            .foregroundColor(Color.mint)
+                     )
+                     .padding()
+                 }.background(
+                    Group {
+                        if !viewModel.meals(for: viewModel.selectedDate).isEmpty {
+                            RoundedRectangle(cornerRadius: 10.0)
+                                .frame(width: 1000, height: 160, alignment: .center)
+                                .foregroundColor(Color.gray)
+                                .brightness(0.4)
+                                .offset(y:45)
+                        }
+                    }
+                )
                  Spacer()
              }
              .navigationTitle("Meal Log")
+             .navigationBarTitleDisplayMode(.inline)
              .sheet(item: $currentMeal, onDismiss: {
                  // Perform any clean-up or reset actions if necessary
              }) { meal in
@@ -107,6 +157,7 @@ extension MealLogViewModel {
         return medications.first { $0.id == id }
     }
 }
+
 extension DateFormatter {
     static let shortTime: DateFormatter = {
         let formatter = DateFormatter()

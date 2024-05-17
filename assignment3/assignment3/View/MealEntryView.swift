@@ -12,12 +12,11 @@ struct MealEntryView: View {
     @ObservedObject var userViewModel: UserViewModel
     @State var meal: Meal
     @Environment(\.presentationMode) var presentationMode
-
     
     var body: some View {
         NavigationView {
             Form {
-                DatePicker("Date", selection: $meal.date, displayedComponents: .date)
+                DatePicker("Date:", selection: $meal.date, displayedComponents: .date)
                 
                 mealDetailsSection
                 
@@ -26,6 +25,7 @@ struct MealEntryView: View {
                 Button("Save") {
                     saveMeal()
                 }
+                .tint(.mint)
             }
             .navigationTitle("Add/Edit Meal")
         }
@@ -33,18 +33,18 @@ struct MealEntryView: View {
 
     private var mealDetailsSection: some View {
         Group {
-            Picker("Meal Type", selection: $meal.mealType) {
+            Picker("Meal Type:", selection: $meal.mealType) {
                 ForEach(Meal.MealType.allCases, id: \.self) { type in
                     Text(type.rawValue.capitalized).tag(type)
                 }
             }
             HStack {
-                Text("Menu Name")
+                Text("Meal Name:")
                 Spacer()
-                TextField("Enter menu name", text: $meal.menuName)
+                TextField("Enter meal name", text: $meal.menuName)
             }
             HStack {
-                Text("Calories")
+                Text("Calories:")
                 Spacer()
                 TextField("Enter calories", value: $meal.calories, formatter: NumberFormatter())
                     .keyboardType(.numberPad)
@@ -60,36 +60,16 @@ struct MealEntryView: View {
                     }) {
                         HStack {
                             Image(systemName: meal.selectedMedications.contains(userViewModel.medications[index].id) ? "checkmark.square.fill" : "square")
+                                .tint(.mint)
                             Text(userViewModel.medications[index].medicationName)
+                                .tint(.mint)
                         }
                     }
                 }
             }
         }
     }
-    
-    /*private var medicationListSection: some View {
-        Section(header: Text("Select Medications")) {
-            ForEach($viewModel.medications.indices, id: \.self) { index in
-                HStack {
-                    Button(action: {
-                        // Toggle selection
-                        let id = $viewModel.medications[index].id
-                        if meal.selectedMedications.contains(id) {
-                            meal.selectedMedications.removeAll { $0 == id }
-                        } else {
-                            meal.selectedMedications.append(id)
-                        }
-                    }) {
-                        HStack {
-                            Image(systemName: meal.selectedMedications.contains($viewModel.medications[index].id) ? "checkmark.square" : "square")
-                            Text(viewModel.medications[index].medicationName)
-                        }
-                    }
-                }
-            }
-        }
-    }*/
+
     private func toggleMedicationSelected(_ id: UUID) {
         if let index = meal.selectedMedications.firstIndex(of: id) {
             meal.selectedMedications.remove(at: index)
@@ -98,6 +78,7 @@ struct MealEntryView: View {
         }
     }
     private func saveMeal() {
+       
         if let index = viewModel.meals.firstIndex(where: { $0.id == meal.id }) {
             viewModel.meals[index] = meal // Update existing meal
         } else {
@@ -122,7 +103,5 @@ struct MealEntryView_Previews: PreviewProvider {
                   selectedMedications: [] // Empty medication list
               )
         )
-        //let sampleDate = Date()
-        //MealEntryView(viewModel: viewModel, meal: Meal(mealType: .breakfast, menuName: "", calories: 0, date: sampleDate))
     }
 }
