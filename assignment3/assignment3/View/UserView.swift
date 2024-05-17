@@ -17,7 +17,7 @@ struct UserView: View {
         VStack {
             Label("Profile", systemImage: "")
                 .foregroundColor(.mint)
-                .font(.largeTitle)
+                .font(.system(size: 30))
                 .fontWeight(.bold)
                 .padding()
             Form {
