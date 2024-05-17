@@ -13,6 +13,7 @@ struct Medication: Codable, Identifiable {
     var medicationTime: Date
     var medicationReminderTiming: ReminderTiming
     
+    //the possible timings for medication reminders
     enum ReminderTiming: String, Codable, CaseIterable {
         case beforeMeal = "Before Meal", duringMeal = "During Meal", afterMeal = "After Meal"
     }

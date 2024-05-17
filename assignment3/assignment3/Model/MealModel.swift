@@ -13,10 +13,8 @@ struct Meal: Identifiable, Codable {
     var calories: Int
     var date: Date
     var selectedMedications: [UUID] = []
-    //var medication: Medication?
-    //var hasMedication: Bool {
-       // return medication != nil
-    //}
+    
+    //the type of meals
     enum MealType: String, Codable, CaseIterable {
         case breakfast, lunch, dinner, snack
     }

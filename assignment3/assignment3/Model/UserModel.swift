@@ -13,6 +13,7 @@ struct User: Codable {
     var weight: Int
     var height: Int
     
+    //gender options
     enum Gender: String, Codable, CaseIterable {
         case male = "Male"
         case female = "Female"

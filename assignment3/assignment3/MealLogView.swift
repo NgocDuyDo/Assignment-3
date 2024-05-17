@@ -53,10 +53,10 @@ import SwiftUI
                  .padding(.top)
 
              mealListSection
-             ForEach(viewModel.medications) { medication in
+             /*ForEach(viewModel.medications) { medication in
                  Text("\(medication.medicationName) : \(medication.medicationDosage), at \(medication.medicationTime, formatter: DateFormatter.shortTime), \(medication.medicationReminderTiming.rawValue)")
              }
-             .padding(.bottom, 60)
+             .padding(.bottom, 60)*/
 
              Button("Add Meal Log") {
                  currentMeal = Meal(mealType: .breakfast, menuName: "", calories: 0, date: viewModel.selectedDate)
