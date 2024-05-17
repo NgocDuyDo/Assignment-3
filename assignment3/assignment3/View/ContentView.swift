@@ -30,7 +30,7 @@ struct ContentView: View {
 
 
 struct LineChartView: View {
-    @StateObject var viewModel = MealLogViewModel(userViewModel: UserViewModel())
+    var viewModel = MealLogViewModel(userViewModel: UserViewModel())
 
     var sortedMeals: [Meal] {
         return viewModel.meals.sorted(by: { $0.date < $1.date })
@@ -112,6 +112,7 @@ struct HomeView: View {
     let caloriesData = [300.0, 500.0, 600.0, 400.0, 700.0, 650.0, 200.0, 300.0, 550.0]
     let maxCalories = 900.0
     @ObservedObject var userViewModel = UserViewModel()
+    @StateObject var mealLogViewModel = MealLogViewModel(userViewModel: UserViewModel())
     var body: some View {
         VStack {
             Label("MealMed", systemImage: "cross.circle")
@@ -123,6 +124,7 @@ struct HomeView: View {
             Text("Welcome back \(userViewModel.user.name)")
                 .font(.headline)
                 .fontWeight(.regular)
+                .foregroundColor(Color.gray).brightness(0.1)
             
             Spacer(minLength: 0)
             LineChartView()
@@ -158,8 +160,12 @@ struct HomeView: View {
             }
 
         }
-
+        .onAppear(perform: refreshData)
     }
+    private func refreshData() {
+           userViewModel.objectWillChange.send()
+           mealLogViewModel.objectWillChange.send()
+       }
 }
 
 #Preview {
