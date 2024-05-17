@@ -20,80 +20,66 @@ import SwiftUI
      }
      
      var body: some View {
-         NavigationView {
-             VStack {
-                 DatePicker("Select Date", selection: $viewModel.selectedDate, displayedComponents: .date)
-                     .datePickerStyle(GraphicalDatePickerStyle())
-                     .tint(.mint)
-                     .labelsHidden()
-                     .frame(width: 350, height: 310, alignment: .center)
-                     .clipped()
-                     .padding()
-                 Spacer()
-                 
-                 
-                 
-                 Text("Recorded Meals").font(.system(size: 20).weight(.medium))
-                     .foregroundColor(Color.white)
-                     .background(
-                        Group {
-                            if !viewModel.meals(for: viewModel.selectedDate).isEmpty {
-                                    RoundedRectangle(cornerRadius: 10.0)
-                                    .frame(width: 1000, height: 45, alignment: .center)
-                                    .foregroundColor(Color.mint).brightness(0.1)
-                            }
-                            else {
-                                RoundedRectangle(cornerRadius: 10.0)
-                                .frame(width: 1000, height: 45, alignment: .center)
-                                .foregroundColor(Color.gray).brightness(0.1)
-                            }
-                            }
-                         )
-                     //.offset(y:-110)
-                 
-                 
-                 mealListSection
-                 ForEach(viewModel.medications) { medication in
-                     Text("\(medication.medicationName) : \(medication.medicationDosage), at \(medication.medicationTime, formatter: DateFormatter.shortTime), \(medication.medicationReminderTiming.rawValue)")
-                 }
-                 .padding(.bottom, 60)
-                 Spacer()
-                 ZStack {
-                     Button("Add Meal Log") {
-                         currentMeal = Meal(mealType: .breakfast, menuName: "", calories: 0, date: viewModel.selectedDate)
-                         showingDetails = true
+         VStack {
+             Text("Meal Log")
+                 .foregroundColor(.mint)
+                 .font(.largeTitle)
+                 .fontWeight(.bold)
+                 .padding()
+
+             DatePicker("Select Date", selection: $viewModel.selectedDate, displayedComponents: .date)
+                 .datePickerStyle(GraphicalDatePickerStyle())
+                 .tint(.mint)
+                 .labelsHidden()
+                 .frame(width: 350, height: 310, alignment: .center)
+                 .clipped()
+                 .padding()
+
+             Text("Recorded Meals").font(.system(size: 20).weight(.medium))
+                 .foregroundColor(Color.white)
+                 .background(
+                     Group {
+                         if !viewModel.meals(for: viewModel.selectedDate).isEmpty {
+                             RoundedRectangle(cornerRadius: 10.0)
+                                 .frame(width: 1000, height: 45, alignment: .center)
+                                 .foregroundColor(Color.mint).brightness(0.1)
+                         } else {
+                             RoundedRectangle(cornerRadius: 10.0)
+                                 .frame(width: 1000, height: 45, alignment: .center)
+                                 .foregroundColor(Color.gray).brightness(0.1)
+                         }
                      }
-                     .font(.system(size: 18).weight(.medium))
-                     .foregroundColor(Color.white)
-                     .background(
-                        RoundedRectangle(cornerRadius: 10.0)
-                            .frame(width: 210, height: 40, alignment: .center)
-                            .foregroundColor(Color.mint)
-                     )
-                     .padding()
-                 }.background(
-                    Group {
-                        if !viewModel.meals(for: viewModel.selectedDate).isEmpty {
-                            RoundedRectangle(cornerRadius: 10.0)
-                                .frame(width: 1000, height: 160, alignment: .center)
-                                .foregroundColor(Color.gray)
-                                .brightness(0.4)
-                                .offset(y:45)
-                        }
-                    }
-                )
-                 Spacer()
+                 )
+                 .padding(.top)
+
+             mealListSection
+             ForEach(viewModel.medications) { medication in
+                 Text("\(medication.medicationName) : \(medication.medicationDosage), at \(medication.medicationTime, formatter: DateFormatter.shortTime), \(medication.medicationReminderTiming.rawValue)")
              }
-             .navigationTitle("Meal Log")
-             .navigationBarTitleDisplayMode(.inline)
-             .sheet(item: $currentMeal, onDismiss: {
-                 // Perform any clean-up or reset actions if necessary
-             }) { meal in
-                 MealEntryView(viewModel: viewModel, userViewModel: userViewModel, meal: meal)
+             .padding(.bottom, 60)
+
+             Button("Add Meal Log") {
+                 currentMeal = Meal(mealType: .breakfast, menuName: "", calories: 0, date: viewModel.selectedDate)
+                 showingDetails = true
              }
+             .font(.system(size: 18).weight(.medium))
+             .foregroundColor(Color.white)
+             .background(
+                 RoundedRectangle(cornerRadius: 10.0)
+                     .frame(width: 210, height: 40, alignment: .center)
+                     .foregroundColor(Color.mint)
+             )
+             .padding()
+
+             Spacer()
+         }
+         .sheet(item: $currentMeal, onDismiss: {
+             // Perform any clean-up or reset actions if necessary
+         }) { meal in
+             MealEntryView(viewModel: viewModel, userViewModel: userViewModel, meal: meal)
          }
      }
-
+     
      private var mealListSection: some View {
          List(viewModel.meals(for: viewModel.selectedDate)) { meal in
              MealView(viewModel: viewModel, meal: meal)  // Pass viewModel here

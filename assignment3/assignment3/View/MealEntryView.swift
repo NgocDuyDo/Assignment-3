@@ -14,7 +14,12 @@ struct MealEntryView: View {
     @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
-        NavigationView {
+        VStack{
+            Text("Add/Edit Meal")
+                .foregroundColor(.mint)
+                .font(.largeTitle)
+                .fontWeight(.bold)
+                .padding()
             Form {
                 DatePicker("Date:", selection: $meal.date, displayedComponents: .date)
                 
@@ -27,7 +32,6 @@ struct MealEntryView: View {
                 }
                 .tint(.mint)
             }
-            .navigationTitle("Add/Edit Meal")
         }
     }
 

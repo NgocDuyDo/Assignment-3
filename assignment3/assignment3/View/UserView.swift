@@ -14,7 +14,12 @@ struct UserView: View {
     @State private var showDatePicker = false
     @State private var isProfileSaved = false
     var body: some View {
-        NavigationView {
+        VStack {
+            Label("Profile", systemImage: "")
+                .foregroundColor(.mint)
+                .font(.largeTitle)
+                .fontWeight(.bold)
+                .padding()
             Form {
                 personalInformationSection
                 bodyMetricsSection
@@ -24,8 +29,6 @@ struct UserView: View {
                 addMedicationSection
                 saveProfileButton
             }
-            .navigationTitle("Profile")
-            .navigationBarTitleDisplayMode(.inline)
         }
     }
     private var personalInformationSection: some View {
