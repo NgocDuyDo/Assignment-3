@@ -11,14 +11,17 @@ import SwiftUI
 
 struct UserView: View {
     @StateObject var userViewModel = UserViewModel()
-    @State private var showDatePicker = false  // State to control visibility of the DatePicker
+    @State private var showDatePicker = false
     @State private var isProfileSaved = false
     var body: some View {
         NavigationView {
             Form {
                 personalInformationSection
                 bodyMetricsSection
-                medicationsSection
+                if !userViewModel.medications.isEmpty {
+                    medicationsSection
+                }
+                addMedicationSection
                 saveProfileButton
             }
             .navigationTitle("Profile")
@@ -88,29 +91,31 @@ struct UserView: View {
                 }
                 .onDelete(perform: userViewModel.removeMedications)
             }
-            Section(header: Text("Add Medication").foregroundColor(.mint)) {
-                TextField("Medication Name", text: $userViewModel.newMedicationName)
-                TextField("Dosage", text: $userViewModel.newMedicationDosage)
-                DatePicker("Time:", selection: $userViewModel.newMedicationTime, displayedComponents: .hourAndMinute)
-                Picker("Reminder Timing", selection: $userViewModel.newMedicationReminderTiming) {
-                    ForEach(Medication.ReminderTiming.allCases, id: \.self) { timing in
-                        Text(timing.rawValue).tag(timing)
-                    }
+        }
+    }
+    private var addMedicationSection: some View {
+        Section(header: Text("Add Medication").foregroundColor(.mint)) {
+            TextField("Medication Name", text: $userViewModel.newMedicationName)
+            TextField("Dosage", text: $userViewModel.newMedicationDosage)
+            DatePicker("Time:", selection: $userViewModel.newMedicationTime, displayedComponents: .hourAndMinute)
+            Picker("Reminder Timing", selection: $userViewModel.newMedicationReminderTiming) {
+                ForEach(Medication.ReminderTiming.allCases, id: \.self) { timing in
+                    Text(timing.rawValue).tag(timing)
                 }
-                .pickerStyle(SegmentedPickerStyle())
-                
-                Button("Add Medication") {
-                    let newMedication = Medication(
-                        medicationName: userViewModel.newMedicationName,
-                        medicationDosage: userViewModel.newMedicationDosage,
-                        medicationTime: userViewModel.newMedicationTime,
-                        medicationReminderTiming: userViewModel.newMedicationReminderTiming
-                    )
-                    userViewModel.addMedication(medication: newMedication)
-                    userViewModel.resetNewMedicationFields() // Clears the fields after adding
-                }
-                .foregroundColor(.mint)
             }
+            .pickerStyle(SegmentedPickerStyle())
+            
+            Button("Add Medication") {
+                let newMedication = Medication(
+                    medicationName: userViewModel.newMedicationName,
+                    medicationDosage: userViewModel.newMedicationDosage,
+                    medicationTime: userViewModel.newMedicationTime,
+                    medicationReminderTiming: userViewModel.newMedicationReminderTiming
+                )
+                userViewModel.addMedication(medication: newMedication)
+                userViewModel.resetNewMedicationFields() // Clears the fields after adding
+            }
+            .foregroundColor(.mint)
         }
     }
 
