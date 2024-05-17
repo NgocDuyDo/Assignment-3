@@ -7,7 +7,7 @@
 
 import SwiftUI
 import Charts
-
+// ContentView: Main tab bar view
 struct ContentView: View {
     var body: some View {
         TabView {
@@ -15,16 +15,16 @@ struct ContentView: View {
                 .tabItem {
                     Label("Home", systemImage: "house")
                 }
-            MealLogView()
+            MealLogView() //Placeholder for future meal log view
                 .tabItem {
                     Label("Log", systemImage: "book")
                 }
-            UserView()
+            UserView() // Placeholder for future user info view
                 .tabItem {
                     Label("User Info", systemImage: "person")
                 }
         }
-        .accentColor(.mint)
+        .accentColor(.mint) //set the tab bar accent color
     }
 }
 
