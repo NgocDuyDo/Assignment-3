@@ -4,8 +4,9 @@ SwiftUI MEALMED with Medication Tracking and Calories Trends for user
 GitHub Link:
 https://github.com/NgocDuyDo/Assignment-3.git
 
-Team Member:
+Team Members:
 14371809 Chloe Park
+24955890 Aston Walsh
 
 
 Description:
